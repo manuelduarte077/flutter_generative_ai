@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:share_plus/share_plus.dart';
+
 import '../services/gemini_service.dart';
 import '../providers/database_provider.dart';
 import '../widgets/cooking_timer.dart';
@@ -438,7 +440,13 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Share.share(
+                    'Check out this recipe!\n\n'
+                    '${_recipe!}',
+                    subject: 'Recipe Share',
+                  );
+                },
                 icon: const Icon(Icons.share),
                 label: const Text('Share'),
               ),

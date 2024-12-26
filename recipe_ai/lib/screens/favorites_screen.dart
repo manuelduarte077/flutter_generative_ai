@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../providers/database_provider.dart';
 import '../database/database.dart';
+import 'package:share_plus/share_plus.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -106,7 +107,14 @@ class FavoritesScreen extends StatelessWidget {
                               SizedBox(
                                 width: double.infinity,
                                 child: FilledButton.icon(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Share.share(
+                                      'Check out this recipe!\n\n'
+                                      '${favorite.title}\n\n'
+                                      '${favorite.recipe}',
+                                      subject: 'Recipe Share',
+                                    );
+                                  },
                                   icon: const Icon(Icons.share),
                                   label: const Text('Share'),
                                 ),
