@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     gemini.prompt(
       parts: [
-        Part.text('Can you solve this equation?'),
+        Part.text('Please solve the following mathematical equation:'),
         Part.uint8List(await imageQuestion!.readAsBytes())
       ],
     ).then((value) {
@@ -136,28 +136,52 @@ class _MyHomePageState extends State<MyHomePage> {
                     fit: BoxFit.fill,
                   ),
           ),
-          ElevatedButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue),
-              ),
-              onPressed: () {
-                selectImageFromGallery();
-              },
-              child: const Text(
-                'Select Image from Gallery',
-                style: TextStyle(color: Colors.white, fontSize: 20.0),
-              )),
-          ElevatedButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue),
-              ),
-              onPressed: () {
-                takePhoto();
-              },
-              child: const Text(
-                'Take Photo',
-                style: TextStyle(color: Colors.white, fontSize: 20.0),
-              )),
+
+          // Select Image Button
+          FilledButton(
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                showDragHandle: true,
+                builder: (context) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 10,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          leading: const Icon(Icons.photo_library),
+                          title: const Text('Select Image from Gallery'),
+                          onTap: () {
+                            Navigator.pop(context);
+                            selectImageFromGallery();
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.camera_alt),
+                          title: const Text('Take Photo'),
+                          onTap: () {
+                            Navigator.pop(context);
+                            takePhoto();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+            child: const Text(
+              'Select Image',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
           isLoading == false && answer == null
               ? const SizedBox.shrink()
               : isLoading != false
@@ -166,8 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   : Text(
                       answer ?? '',
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 18.0),
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
                       textAlign: TextAlign.start,
                     )
         ],
