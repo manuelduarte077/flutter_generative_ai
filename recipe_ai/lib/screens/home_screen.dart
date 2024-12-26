@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../services/gemini_service.dart';
 import '../providers/database_provider.dart';
+import '../widgets/cooking_timer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -144,6 +145,11 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() => _isLoading = false);
       _showError('Failed to generate recipe: $e');
     }
+  }
+
+  String _extractCookingTime(String recipe) {
+    final cookingTimeMatch = RegExp(r'Cooking Time:(.*?)\n').firstMatch(recipe);
+    return cookingTimeMatch?.group(1)?.trim() ?? '0 minutes';
   }
 
   @override
@@ -396,7 +402,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            Text('Ingredients: ${_ingredientsController.text}'),
+
+            /// Cooking timer
+            if (_recipe != null) ...[
+              const SizedBox(height: 16),
+              CookingTimer(cookingTime: _extractCookingTime(_recipe!)),
+              const SizedBox(height: 16),
+            ],
+            Text(
+              'Ingredients: ${_ingredientsController.text}',
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
 
             /// Recipe
             ..._recipe!.split('\n').map(
