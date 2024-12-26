@@ -4,11 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:gemini_math_solver/api.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
-  Gemini.init(apiKey: 'AIzaSyCIv8xVk7nrFLXH-fGlsHAwkKEuSXKJFq0');
+  Gemini.init(apiKey: apiKey);
+
   runApp(const MyApp());
 }
 
@@ -64,11 +66,22 @@ class _MyHomePageState extends State<MyHomePage> {
             CropAspectRatioPresetCustom(),
           ],
         ),
+        IOSUiSettings(
+          title: 'Cropper',
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPresetCustom(),
+          ],
+        ),
+        WebUiSettings(
+          context: context,
+        ),
       ],
     );
 
     setState(() {
-      imageQuestion = XFile(croppedFile!.path);
+      imageQuestion = XFile(croppedFile?.path ?? '');
       isLoading = true;
     });
 
