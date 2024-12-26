@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
-
+import '../database/database.dart';
+import '../providers/database_provider.dart';
 import '../screens/home_screen.dart';
+import '../screens/favorites_screen.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final database = AppDatabase();
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Recipe Generator',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+    return DatabaseProvider(
+      database: database,
+      child: MaterialApp(
+        title: 'Recipe Generator',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomeScreen(),
+          '/favorites': (context) => const FavoritesScreen(),
+        },
       ),
-      home: const HomeScreen(),
     );
   }
 }
