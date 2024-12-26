@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../services/gemini_service.dart';
+import '../providers/database_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _recipe;
   bool _isLoading = false;
   File? _selectedImage;
+
   String _selectedCategory = 'All';
   final List<String> _categories = [
     'All',
@@ -29,6 +31,19 @@ class _HomeScreenState extends State<HomeScreen> {
     'Vegetarian',
     'Healthy',
   ];
+
+  bool _isCurrentRecipeFavorite = false;
+
+  Future<void> _checkFavoriteStatus() async {
+    if (_recipe != null) {
+      final isFavorite =
+          await DatabaseProvider.of(context).database.isFavorite(_recipe!);
+
+      setState(() {
+        _isCurrentRecipeFavorite = isFavorite;
+      });
+    }
+  }
 
   /// Web implementation
 
@@ -110,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading = true;
       _recipe = null;
+      _isCurrentRecipeFavorite = false;
     });
 
     try {
@@ -122,6 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _recipe = recipe;
         _isLoading = false;
       });
+
+      _checkFavoriteStatus();
     } catch (e) {
       setState(() => _isLoading = false);
       _showError('Failed to generate recipe: $e');
@@ -140,6 +158,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Recipe Generator'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, '/favorites'),
+            icon: const Icon(Icons.favorite),
+          ),
+        ],
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -332,12 +356,45 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Recipe',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Recipe',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    _isCurrentRecipeFavorite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: _isCurrentRecipeFavorite ? Colors.red : null,
+                  ),
+                  onPressed: () async {
+                    final db = DatabaseProvider.of(context).database;
+
+                    setState(() {
+                      _isCurrentRecipeFavorite = !_isCurrentRecipeFavorite;
+                    });
+
+                    try {
+                      if (_isCurrentRecipeFavorite) {
+                        await db.addFavorite('Recipe', _recipe ?? '');
+                      } else {
+                        await db.removeFavorite(_recipe ?? '');
+                      }
+                    } catch (e) {
+                      setState(() {
+                        _isCurrentRecipeFavorite = !_isCurrentRecipeFavorite;
+                      });
+                      _showError('Failed to update favorite status');
+                    }
+                  },
+                ),
+              ],
             ),
             Text('Ingredients: ${_ingredientsController.text}'),
 
