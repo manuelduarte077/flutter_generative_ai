@@ -230,6 +230,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.22.1"
+  drift_flutter:
+    dependency: "direct main"
+    description:
+      name: drift_flutter
+      sha256: "9fd9b479c6187d6b3bbdfd2703df98010470a6c65c2a8c8c5a1034c620bd0a0e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   fake_async:
     dependency: transitive
     description:
@@ -738,6 +746,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.0"
+  sqlite3_flutter_libs:
+    dependency: transitive
+    description:
+      name: sqlite3_flutter_libs
+      sha256: "73016db8419f019e807b7a5e5fbf2a7bd45c165fed403b8e7681230f3a102785"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.28"
   sqlparser:
     dependency: transitive
     description:

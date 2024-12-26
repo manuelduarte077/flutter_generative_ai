@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        ),
         initialRoute: '/',
         routes: {
           '/': (context) => const HomeScreen(),

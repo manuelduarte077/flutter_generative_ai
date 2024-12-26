@@ -169,7 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () => Navigator.pushNamed(context, '/favorites'),
-            icon: const Icon(Icons.favorite),
+            icon: const Icon(
+              Icons.favorite_outline,
+              size: 24,
+            ),
           ),
         ],
       ),
@@ -374,6 +377,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
+                /// Favorite button
                 IconButton(
                   icon: Icon(
                     _isCurrentRecipeFavorite
@@ -411,6 +416,8 @@ class _HomeScreenState extends State<HomeScreen> {
               CookingTimer(cookingTime: _extractCookingTime(_recipe!)),
               const SizedBox(height: 16),
             ],
+
+            /// Ingredients
             Text(
               'Ingredients: ${_ingredientsController.text}',
               style: const TextStyle(

@@ -3,7 +3,6 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-
 part 'database.g.dart';
 
 class FavoriteRecipes extends Table {
@@ -49,6 +48,11 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'recipes.sqlite'));
+
+    if (Platform.isAndroid) {
+      return NativeDatabase.createInBackground(file);
+    }
+
     return NativeDatabase.createInBackground(file);
   });
 }
