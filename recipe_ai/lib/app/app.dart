@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../database/database.dart';
 import '../providers/database_provider.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     return DatabaseProvider(
       database: database,
       child: MaterialApp(
+        debugShowCheckedModeBanner: kDebugMode ? true : false,
         title: 'Recipe Generator',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
