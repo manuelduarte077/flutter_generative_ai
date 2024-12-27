@@ -67,7 +67,13 @@ class _RecommendationPageState extends State<RecommendationPage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: Text('Car Recommendations'),
+          middle: Text(
+            'Car Recommendations',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -82,7 +88,6 @@ class _RecommendationPageState extends State<RecommendationPage> {
                     'Find the perfect car for your needs in Nicaragua. Enter your preferences and budget to get started.',
                     style: TextStyle(
                       fontSize: 16,
-                      color: CupertinoColors.label,
                     ),
                   ),
 
@@ -102,7 +107,6 @@ class _RecommendationPageState extends State<RecommendationPage> {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: CupertinoColors.label,
                                 ),
                               ),
                             ))
@@ -128,8 +132,17 @@ class _RecommendationPageState extends State<RecommendationPage> {
                   ),
                   const SizedBox(height: 24),
                   CupertinoButton.filled(
+                    borderRadius: BorderRadius.circular(16),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     onPressed: _getRecommendation,
-                    child: const Text('Get Recommendation'),
+                    child: const Text(
+                      'Get Recommendation',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: CupertinoColors.white,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 24),
                   if (_isLoading)
