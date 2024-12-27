@@ -25,15 +25,15 @@ class MainApp extends StatelessWidget {
             tabBar: CupertinoTabBar(
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.car_detailed),
+                  icon: Icon(CupertinoIcons.car_detailed, size: 24),
                   label: 'Recognition',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.search),
+                  icon: Icon(CupertinoIcons.search, size: 24),
                   label: 'Recommend',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.settings),
+                  icon: Icon(CupertinoIcons.settings, size: 24),
                   label: 'Settings',
                 ),
               ],

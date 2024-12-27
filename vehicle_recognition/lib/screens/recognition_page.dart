@@ -81,6 +81,7 @@ class _RecognitionPageState extends State<RecognitionPage> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
+                spacing: 20,
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -90,12 +91,11 @@ class _RecognitionPageState extends State<RecognitionPage> {
                         borderRadius: BorderRadius.circular(12),
                         child: Image.file(
                           _selectedImage!,
-                          height: 300,
+                          height: 250,
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
                   ],
 
                   /// Loading
@@ -113,13 +113,9 @@ class _RecognitionPageState extends State<RecognitionPage> {
                       ),
                     ),
 
-                  /// Buttons
-                  const SizedBox(height: 16),
-
                   /// showModalBottomSheet
                   CupertinoButton.filled(
                     borderRadius: BorderRadius.circular(16),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
                     onPressed: () {
                       showCupertinoModalPopup(
                         context: context,
@@ -201,7 +197,7 @@ class _RecognitionPageState extends State<RecognitionPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 60),
                 ],
               ),
             ),
