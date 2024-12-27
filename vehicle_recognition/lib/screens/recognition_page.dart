@@ -67,7 +67,13 @@ class _RecognitionPageState extends State<RecognitionPage> {
         slivers: [
           const CupertinoSliverNavigationBar(
             leading: Icon(CupertinoIcons.car),
-            largeTitle: Text('Car Recognition'),
+            largeTitle: Text(
+              'Car Recognition',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             trailing: Icon(CupertinoIcons.camera),
           ),
           SliverFillRemaining(
@@ -111,9 +117,8 @@ class _RecognitionPageState extends State<RecognitionPage> {
                   const SizedBox(height: 16),
 
                   /// showModalBottomSheet
-                  CupertinoButton(
+                  CupertinoButton.filled(
                     borderRadius: BorderRadius.circular(16),
-                    color: CupertinoColors.activeBlue,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     onPressed: () {
                       showCupertinoModalPopup(
@@ -140,19 +145,37 @@ class _RecognitionPageState extends State<RecognitionPage> {
                                   _pickImage(ImageSource.camera);
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Camera'),
+                                child: const Text(
+                                  'Camera',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                               CupertinoActionSheetAction(
                                 onPressed: () {
                                   _pickImage(ImageSource.gallery);
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Gallery'),
+                                child: const Text(
+                                  'Gallery',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                             ],
                             cancelButton: CupertinoActionSheetAction(
                               onPressed: () => Navigator.pop(context),
-                              child: const Text('Cancel'),
+                              child: const Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
                           );
                         },
